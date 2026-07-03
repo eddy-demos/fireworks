@@ -1,0 +1,15 @@
+{
+  "name": "fireworks",
+  "version": "1.0.0",
+  "description": "Interactive July 4th fireworks show — a looping night-sky canvas animation in four acts.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.5"
+  }
+}
