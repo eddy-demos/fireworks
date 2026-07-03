@@ -246,10 +246,21 @@ export class FireworksShow {
     this.rebuildParticles();
   }
 
+  // Effective sampling cell. `dotSize` is tuned in CSS px for a desktop-width
+  // viewport; since each formation's width scales with the viewport, a fixed
+  // cell yields far fewer dots on narrow (mobile) screens and the shapes read
+  // as sparse. Scaling the cell down on smaller viewports keeps the dot count
+  // *across* a formation roughly constant, so forms stay legible everywhere.
+  private effectiveCell(): number {
+    const REF_W = 1000; // width dotSize was tuned for; wider screens are unchanged
+    const scale = Math.min(1, this.w / REF_W);
+    return Math.max(2.5, this.config.dotSize * scale);
+  }
+
   // One particle per flag dot; each belongs to a same-color firework burst
   private rebuildParticles() {
     const w = this.w, h = this.h;
-    const cell = this.cell = this.config.dotSize;
+    const cell = this.cell = this.effectiveCell();
     const fw = Math.min(w * 0.68, h * 0.6 * 1.9), fh = fw / 1.9;
     this.fx0 = (w - fw) / 2;
     this.fy0 = (h - fh) / 2 - h * 0.02;
@@ -464,7 +475,7 @@ export class FireworksShow {
       this.last = now;
       this.t += dt * this.config.speed;
       this.dt = dt * this.config.speed;
-      if (this.config.dotSize !== this.cell) this.rebuildParticles();
+      if (this.effectiveCell() !== this.cell) this.rebuildParticles();
       this.drawFrame();
       this.raf = requestAnimationFrame(tick);
     };
