@@ -23,5 +23,20 @@ if (document.fonts?.ready) {
   });
 }
 
+// Custom cursor: an outlined circle that follows the pointer (positioned via
+// left/top so it tracks instantly), with a filled circle that fades in inside
+// it while the click is held. The hold/scale styling is driven by CSS classes.
+const cursor = document.getElementById('cursor') as HTMLDivElement;
+window.addEventListener('pointermove', (e) => {
+  cursor.style.left = `${e.clientX}px`;
+  cursor.style.top = `${e.clientY}px`;
+  cursor.classList.add('visible');
+});
+window.addEventListener('pointerdown', () => cursor.classList.add('held'));
+const releaseCursor = () => cursor.classList.remove('held');
+window.addEventListener('pointerup', releaseCursor);
+window.addEventListener('pointercancel', releaseCursor);
+window.addEventListener('blur', releaseCursor);
+
 // Expose for quick console tweaking during development.
 (window as unknown as { show: FireworksShow }).show = show;

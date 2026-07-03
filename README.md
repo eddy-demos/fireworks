@@ -6,7 +6,7 @@ animation in four acts. Fireworks burst and their sparks fall ballistically; if 
 into that act's dot-matrix formation:
 
 1. the tenki logo
-2. a second brand logo
+2. the luxor logo
 3. the American flag
 4. the number "250"
 

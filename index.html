@@ -3,7 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Interactive July 4th Fireworks Show</title>
+  <title>Tenki Cloud - July 04, 2026</title>
+  <link rel="icon" type="image/svg+xml" href="/uploads/favicon.svg" />
+
+  <!-- Open Graph / social preview.
+       NOTE: most scrapers (Facebook, Slack, LinkedIn, iMessage) require an
+       ABSOLUTE og:image URL. Replace the path below with your deployed URL,
+       e.g. https://your-domain.com/og-image.png -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tenki Cloud - July 04, 2026" />
+  <meta property="og:description" content="An interactive July 4th fireworks show — press and hold." />
+  <meta property="og:image" content="/uploads/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/uploads/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;900&display=swap" rel="stylesheet" />
@@ -15,7 +27,41 @@
       background: linear-gradient(180deg, #0A0A1E 0%, #05050F 45%, #000000 100%);
       position: relative;
       overflow: hidden;
+      cursor: none;
     }
+    /* Custom cursor: an outlined circle that tracks the pointer; a filled
+       circle fades in inside it while the user holds their click. */
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      margin: -14px 0 0 -14px; /* center on the pointer */
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0; /* revealed on first pointer move */
+      transition: opacity 0.2s ease, border-color 0.15s ease, transform 0.12s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cursor.visible { opacity: 1; }
+    #cursor.held {
+      border-color: rgba(255, 255, 255, 0.9);
+      transform: scale(1.15);
+    }
+    #cursor .fill {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(0);
+      transition: transform 0.15s ease;
+    }
+    #cursor.held .fill { transform: scale(1); }
     #stage canvas {
       position: absolute;
       inset: 0;
@@ -49,6 +95,7 @@
     <canvas id="fireworks"></canvas>
     <div id="hint"><span>Press and hold to see something magical</span></div>
   </div>
+  <div id="cursor"><div class="fill"></div></div>
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
