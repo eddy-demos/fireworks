@@ -1,4 +1,11 @@
+import { inject } from '@vercel/analytics';
 import { FireworksShow } from './FireworksShow.ts';
+
+// Vercel Web Analytics. This is a vanilla TS + Vite app (no React/Next), so we
+// use the framework-agnostic inject() rather than the <Analytics /> component.
+// Data is only collected once deployed on Vercel with Analytics enabled; locally
+// it runs in debug mode and logs to the console without sending anything.
+inject();
 
 const canvas = document.getElementById('fireworks') as HTMLCanvasElement;
 const starCanvas = document.getElementById('stars') as HTMLCanvasElement;
